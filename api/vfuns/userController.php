@@ -9,7 +9,7 @@ class PluginController
         //die("ok" . var_dump($params));
     }
 
-    public function login($params = [""])
+    public function login($params)
     {
         if (!PBSController::cfun()->requireOnlyPost())
             makeResponse(400, "Bad Request", false, [
@@ -30,7 +30,8 @@ class PluginController
             "info" => "Successfully logged in",
             "userFields" => [
                 "username" => $_POST["username"],
-                "password" => $_POST["password"]
+                "password" => $_POST["password"],
+                "params" => $params
             ]
         ]);
 

@@ -48,15 +48,13 @@ class ApiRouter
                 "err" => "need client credentials",
             ]);
 
-
-
         if (isset($uriA[0]) && file_exists("./vfuns/" . $uriA[0] . ".php")) {  // if uri contains controller file name
             require("./vfuns/" . $uriA[0] . ".php"); // if uri contains controller file name. load controller file
 
             $plController = PluginController::cfun([]); // call plugin controller constructor(own) function
             if (method_exists($plController, $uriA[1])) // plugin class is if contains function from second uri array
             {
-                $plController->{$uriA[1]}(); // call plugin class constructor(own) function
+                $plController->{$uriA[1]}($uriA); // call plugin class constructor(own) function
             } else { // plugin class is if not contains a method, call makeresponse function with correct response code :)
                 makeResponse(400, "Bad Request", false, [
                     "err" => "invalid request",
@@ -69,6 +67,10 @@ class ApiRouter
         }
     }
 
+    public function errorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
+        return true;
+    }
+
     public static function cfun()
     {
         return new ApiRouter();
@@ -76,4 +78,6 @@ class ApiRouter
 }
 
 
-ApiRouter::cfun()->run($_SERVER["REQUEST_URI"]);
+$ar = ApiRouter::cfun();
+
+$ar->run($_SERVER["REQUEST_URI"]);
