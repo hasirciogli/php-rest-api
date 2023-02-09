@@ -1,7 +1,11 @@
 <?php
 
+include __DIR__ . "/../Config.php";
+include __DIR__ . "/../Database.php";
 
 //$_POST = json_decode(file_get_contents('php://input'), true);
+
+
 
 class ApiRouter
 {

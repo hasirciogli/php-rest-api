@@ -11,6 +11,8 @@ class PluginController
 
     public function login($params)
     {
+
+
         if (!PBSController::cfun()->requireOnlyPost())
             makeResponse(400, "Bad Request", false, [
                 "err" => "you just need a post request",
